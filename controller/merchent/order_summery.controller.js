@@ -23,8 +23,14 @@ exports.getOrderSummery = async (req, res) => {
 
 exports.getAllOrderSummery = async (req, res) => {
   try {
-    const orderSummary = await orderSummeryServic.getAllOrderSummary();
-    res.json(orderSummary);
+    const { orderSummary, TotalOrderSummary } =
+      await orderSummeryServic.getAllOrderSummary();
+    res
+      .status(200)
+      .json({
+        TotalOrderSummary: TotalOrderSummary,
+        orderSummary: orderSummary,
+      });
   } catch (error) {
     console.error("Error fetching all order summary:", error);
     res.status(500).json({

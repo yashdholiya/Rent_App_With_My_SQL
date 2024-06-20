@@ -37,7 +37,7 @@ module.exports = class orderServices {
           priceType === "month" ? item.month_price : item.week_price;
         const total_price = item.quantity * price;
         subtotal += total_price;
-        totalDeposit += (item.deposite || 0) * item.quantity; // Ensure deposit is not undefined
+        totalDeposit += (item.deposite || 0) * item.quantity; 
         return {
           category_id: item.category_id,
           product_id: item.product_id,
@@ -45,7 +45,7 @@ module.exports = class orderServices {
           week_price: priceType === "week" ? price : 0,
           quantity: item.quantity,
           total_price: total_price,
-          deposite: item.deposite || 0, // Ensure deposit is not undefined
+          deposite: item.deposite || 0,
         };
       });
 

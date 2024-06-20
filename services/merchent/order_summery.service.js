@@ -78,6 +78,7 @@ module.exports = class OrderSummaryService {
       };
 
       const paymentSummary = {
+        totalProductPrice,
         deposit,
         deliveryCharge,
         totalPayable,
@@ -97,7 +98,8 @@ module.exports = class OrderSummaryService {
     try {
       const selectSql = `SELECT * FROM order_summary`;
       const [rows] = await db.query(selectSql);
-      return rows;
+      const TotalOrderSummary = rows.length;
+      return { orderSummary: rows, TotalOrderSummary: TotalOrderSummary };
     } catch (error) {
       console.error(error);
       throw error;
