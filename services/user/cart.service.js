@@ -67,7 +67,8 @@ module.exports = class cartServices {
     const sql = "SELECT * FROM cart WHERE user_id = ?";
     try {
       const [cartItems] = await db.query(sql, [userId]);
-      return cartItems;
+      const TotalCart = cartItems.length;
+      return { cart: cartItems, TotalCart: TotalCart };
     } catch (error) {
       console.log(error);
       throw error;

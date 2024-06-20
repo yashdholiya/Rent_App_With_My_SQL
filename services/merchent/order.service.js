@@ -4,7 +4,8 @@ module.exports = class orderMerchentServices {
     console.log(sql);
     try {
       const [result] = await db.query(sql);
-      return result;
+      const totalPlacesOrder = result.length;
+      return { placesOrder: result, totalPlacesOrder: totalPlacesOrder };
     } catch {
       console.log(err);
       return err;
@@ -16,7 +17,8 @@ module.exports = class orderMerchentServices {
     console.log(sql);
     try {
       const [result] = await db.query(sql);
-      return result;
+      const totalPendingOrder = result.length;
+      return { pandingOrder: result, totalPendingOrder: totalPendingOrder };
     } catch {
       console.log(err);
       return err;
@@ -28,7 +30,8 @@ module.exports = class orderMerchentServices {
     console.log(sql);
     try {
       const [result] = await db.query(sql);
-      return result;
+      const totalSuccessOrder = result.length;
+      return { successOrder: result, totalSuccessOrder: totalSuccessOrder };
     } catch {
       console.log(err);
       return err;
@@ -40,7 +43,8 @@ module.exports = class orderMerchentServices {
     console.log(sql);
     try {
       const [result] = await db.query(sql);
-      return result;
+      const TotalAllOrder = result.length;
+      return { orders: result, TotalAllOrder: TotalAllOrder };
     } catch {
       console.log(err);
       return err;

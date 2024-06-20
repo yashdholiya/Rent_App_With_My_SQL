@@ -116,7 +116,6 @@ exports.searchAndFilter = async (req, res) => {
       search
     );
     res.json(products);
-    console.log("hello mota  bhai.....", products);
   } catch (error) {
     console.error("Error searching and filtering products:", error);
     res.status(500).json({
@@ -127,10 +126,14 @@ exports.searchAndFilter = async (req, res) => {
 };
 
 exports.getProductsByPriceRange = async (req, res) => {
-  const { priceType, minPrice, maxPrice } = req.body;
+  const { rentType, minPrice, maxPrice } = req.body;
 
-  if (!priceType || minPrice || !maxPrice) {
-    console.log(priceType, minPrice, maxPrice);
+  if (
+    rentType === undefined ||
+    minPrice === undefined ||
+    maxPrice === undefined
+  ) {
+    console.log(rentType, minPrice, maxPrice);
     return res
       .status(400)
       .json({ message: "priceType, minPrice, and maxPrice are required" });
@@ -138,7 +141,7 @@ exports.getProductsByPriceRange = async (req, res) => {
 
   try {
     const products = await UserService.getProductsByPriceRange(
-      priceType,
+      rentType,
       minPrice,
       maxPrice
     );
@@ -158,11 +161,9 @@ exports.getTrendingProducts = async (req, res) => {
     res.json(products);
   } catch (error) {
     console.error("Error fetching trending products:", error);
-    res
-      .status(500)
-      .json({
-        message: "Error fetching trending products",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Error fetching trending products",
+      error: error.message,
+    });
   }
 };

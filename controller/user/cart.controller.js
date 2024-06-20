@@ -20,12 +20,15 @@ exports.getAllCart = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 exports.getCart = async (req, res) => {
   const userId = req.userId;
   try {
-    const result = await cartService.getCart(userId);
-    res.status(200).json(result);
-  } catch (error) {
+    const { cart, TotalCart }  = await cartService.getCart(userId);
+    res
+    .status(200)
+    .json({ TotalCart: TotalCart, cart: cart }); 
+   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };

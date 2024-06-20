@@ -145,46 +145,17 @@ module.exports = class UserServices {
     console.log("params...", params);
     try {
       const [rows] = await db.query(sql, params);
-      console.log("serch  result .........");
+      console.log("serch  result .........", rows);
       return rows;
     } catch (error) {
       throw new Error("Failed to search products: " + error.message);
     }
   }
 
-  // price range
-  // async getProductsByPriceRange(minPrice, maxPrice) {
-  //   const sql = `
-  //     SELECT
-  //       p.id AS product_id,
-  //       p.name AS product_name,
-  //       p.description,
-  //       pp.month_price,
-  //       pp.week_price,
-  //       c.name AS category_name
-  //     FROM
-  //       products AS p
-  //     JOIN
-  //       product_price AS pp ON p.id = pp.product_id
-  //     JOIN
-  //       categories AS c ON p.ref_categorie_id = c.id
-  //     WHERE
-  //       pp.month_price BETWEEN ? AND ?
-  //   `;
-
-  //   try {
-  //     const [results] = await db.query(sql, [minPrice, maxPrice]);
-  //     return results;
-  //   } catch (error) {
-  //     console.error("Error fetching products:", error);
-  //     throw error;
-  //   }
-  // }
-
-  async getProductsByPriceRange(priceType, minPrice, maxPrice) {
+  async getProductsByPriceRange(rentType, minPrice, maxPrice) {
     let priceColumn;
 
-    switch (priceType) {
+    switch (rentType) {
       case "month":
         priceColumn = "pp.month_price";
         break;
@@ -211,6 +182,8 @@ module.exports = class UserServices {
           categories AS c ON p.ref_categorie_id = c.id
       WHERE
           ${priceColumn} BETWEEN ? AND ?
+          ORDER BY
+        ${priceColumn} ASC
     `;
 
     try {
