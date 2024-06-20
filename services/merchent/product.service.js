@@ -45,8 +45,8 @@ module.exports = class productServices {
     const sql = "SELECT * FROM products";
     try {
       const [result] = await db.query(sql);
-      console.log(result);
-      return result;
+      const TotalProduct = result.length;
+      return { product: result, TotalProduct: TotalProduct };
     } catch (error) {
       throw error;
     }

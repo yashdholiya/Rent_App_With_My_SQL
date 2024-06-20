@@ -22,7 +22,8 @@ module.exports = class categoryServices {
     const sql = "SELECT * FROM categories";
     try {
       const [result] = await db.query(sql);
-      return result;
+      const TotalCategory = result.length;
+      return { category: result, TotalCategory: TotalCategory };
     } catch (err) {
       console.error(err);
       throw err;

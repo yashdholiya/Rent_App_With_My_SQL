@@ -40,11 +40,12 @@ exports.getProductByAdminId = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
+
 // GET ALL PRODUCT
 exports.getAllProduct = async (req, res) => {
   try {
-    const product = await productService.getAllProduct();
-    res.status(200).json(product);
+    const { product, TotalProduct } = await productService.getAllProduct();
+    res.status(200).json({ TotalProduct: TotalProduct, product: product });
   } catch {
     res.status(500).json({ message: err.message });
   }

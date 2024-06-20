@@ -13,11 +13,11 @@ exports.addCategoriy = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-// GET  SPECIFIC CATEGORY
+// GET  CATEGORY
 exports.getCatogery = async (req, res) => {
   try {
-    const result = await categoryService.getCategory();
-    res.status(200).json(result);
+    const { category, TotalCategory } = await categoryService.getCategory();
+    res.status(200).json({ TotalCategory: TotalCategory, category: category });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
