@@ -37,7 +37,7 @@ module.exports = class paymentServices {
 
       const updateOrderSql = "UPDATE orders SET status = ? WHERE order_id = ?";
       await connection.query(updateOrderSql, ["success", orderId]);
-      
+
       // Find related product_id and quantity from order_items table
       const orderItemsSql =
         "SELECT product_id, quantity FROM order_items WHERE order_id = ?";
