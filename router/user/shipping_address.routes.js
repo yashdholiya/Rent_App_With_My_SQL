@@ -8,12 +8,12 @@ const {
 } = require("../../controller/user/shipping_address.controller");
 const verifyToken = require("../../helper/userToken");
 
-shipingAddressRoute.post("/add-shipping", verifyToken, createAddress);
+shipingAddressRoute.post("/add-shipping", createAddress);
 
 shipingAddressRoute.get("/get-all", getAllAddress);
 
 shipingAddressRoute.put("/update", verifyToken, updateAddress);
 
-shipingAddressRoute.delete("/delete", deleteAddress);
+shipingAddressRoute.delete("/delete/:id", deleteAddress);
 
 module.exports = shipingAddressRoute;

@@ -2,11 +2,10 @@ const shippimngAddressServices = require("../../services/user/shipping_address.s
 const shippimngAddressService = new shippimngAddressServices();
 
 exports.createAddress = async (req, res) => {
-  const userId = req.userId;
-  const { address_1, address_2, city, pincode } = req.body;
+  const {order_id , address_1, address_2, city, pincode } = req.body;
   try {
     const address = await shippimngAddressService.createAddress(
-      userId,
+      order_id,
       address_1,
       address_2,
       city,

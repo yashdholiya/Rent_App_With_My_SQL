@@ -13,7 +13,7 @@ module.exports = class paymentServices {
       }
 
       const order = orderResults[0];
-      const orderTotalPrice = parseFloat(order.total_price).toFixed(2);
+      const orderTotalPrice = parseFloat(order.total_price).toFixed(2);               
       const paymentAmount = parseFloat(amount).toFixed(2);
 
       console.log("orderTotalPrice:", orderTotalPrice);
@@ -27,6 +27,7 @@ module.exports = class paymentServices {
                 INSERT INTO payments (order_id, amount, payment_method, transaction_id, status) 
                 VALUES (?, ?, ?, ?, ?)
             `;
+              const paymentValues = [orderId, amount, paymentMethod, transactionId, "success"];
       const [paymentResult] = await connection.query(paymentSql, [
         orderId,
         amount,

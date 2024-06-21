@@ -3,7 +3,7 @@ module.exports = class cartServices {
     try {
       // Fetch the favorite item details
       const [favoriteItems] = await db.query(
-        "SELECT * FROM favorite WHERE id = ?",
+        "SELECT *? FROM favorite WHERE id = ",
         [favoriteId]
       );
 

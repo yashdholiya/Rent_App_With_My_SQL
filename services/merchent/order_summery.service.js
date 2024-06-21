@@ -24,6 +24,7 @@ module.exports = class OrderSummaryService {
           oi.week_price,
           p.id AS product_id,
           p.ref_categorie_id AS category_id
+          sa.id AS ship_add_id,
         FROM
           orders AS o
         JOIN
@@ -74,7 +75,7 @@ module.exports = class OrderSummaryService {
         orderId: orderDetails.order_id,
         userId: orderDetails.user_id,
         productId: orderDetails.product_id,
-        payPrice: totalPayable,
+        payPrice: totalPayable,                   
       };
 
       const paymentSummary = {

@@ -1,16 +1,14 @@
 module.exports = class favoriteServices {
   // ADD FAVORITE USING USER IS AND PRODUCT ID
   async addFavorite(userId, productId) {
-    const sql = "INSERT INTO favorite (user_id, product_id ) VALUES (?, ?)";
+    const sql = "INSERT INTO favorite (user_id , product_id) VALUES (? ,?)";
     try {
-      const result = db.query(sql, [userId, productId]);
-      return {
-        user_id: userId,
-        productid: productId,
-      };
+      const [result] = await db.query(sql, [userId, productId]);
+      console.log("result ....",result);
+      return result;
     } catch (error) {
-      console.error(err);
-      throw err;
+      console.log(error);
+      return error;
     }
   }
 

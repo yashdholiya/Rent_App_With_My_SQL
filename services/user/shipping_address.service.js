@@ -1,25 +1,50 @@
-module.exports = class shippimngAddressServices {
-  async createAddress(userId, address_1, address_2, city, pincode) {
-    const sql =
-      "INSERT INTO shipping_address (user_id, address_1, address_2, city, pincode) VALUES (?, ?, ?, ?,?) ";
+module.exports = class ShippingAddressService {
+  async createAddress(order_id, address_1, address_2, city, pincode) {
     try {
-      const [result] = await db.query(sql, [
+      // Check if the order status is 'success'
+      const statusCheckSql = `SELECT user_id, status FROM orders WHERE order_id = ?`;
+      const [statusResult] = await db.query(statusCheckSql, [order_id]);
+
+      if (statusResult.length === 0) {
+        throw new Error("Order not found.");
+      }
+
+      const { user_id: userId, status } = statusResult[0];
+
+      if (status !== "success") {
+        throw new Error("Order status is not 'success'.");
+      }
+
+      // Insert the new address into the shipping_address table
+      const insertSql = `
+        INSERT INTO shipping_address (order_id, user_id, address_1, address_2, city, pincode)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `;
+
+      const [result] = await db.query(insertSql, [
+        order_id,
         userId,
         address_1,
         address_2,
         city,
         pincode,
       ]);
+
+      const updateOrderStatus = "UPDATE orders SET status = 'shipped' WHERE order_id = ?";
+      await db.query(updateOrderStatus, [order_id]);
+
+
       return {
         message: "Address created successfully",
+        order_id,
         user_id: userId,
-        address_1: address_1,
-        address_2: address_2,
-        city: city,
-        pincode: pincode,
+        address_1,
+        address_2,
+        city,
+        pincode,
       };
     } catch (error) {
-      console.log(error);
+      console.error(error);
       throw error;
     }
   }
